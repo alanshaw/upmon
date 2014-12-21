@@ -1,0 +1,35 @@
+{
+  "name": "up",
+  "version": "0.0.0",
+  "description": "Ping websites and send an email when they're not up",
+  "main": "up.js",
+  "scripts": {
+    "start": "node up",
+    "test": "istanbul cover node_modules/.bin/tape test.js"
+  },
+  "keywords": [
+    "up",
+    "ping",
+    "service",
+    "health",
+    "monitoring"
+  ],
+  "author": "Alan Shaw",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.9.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.5",
+    "nodemailer-stub-transport": "^0.1.5",
+    "tape": "^3.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alanshaw/up.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alanshaw/up/issues"
+  },
+  "homepage": "https://github.com/alanshaw/up"
+}
