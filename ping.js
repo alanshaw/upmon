@@ -25,14 +25,14 @@ PingStream.prototype._pingServices = function () {
   }
 
   this.opts.services.forEach(function (url) {
-    console.log('Pinging', url)
+    console.log('Ping', url)
 
     var protocol = url.slice(0, 5) == 'https' ? https : http
 
     protocol.get(url, function (res) {
       console.log('Pong', url, res.statusCode)
       self.push({url: url, status: res.statusCode, timestamp: new Date()})
-      res.on('data', function () {})
+      res.resume()
       pingDone()
     }).on('error', function (e) {
       console.log('Pong', url, 500)
