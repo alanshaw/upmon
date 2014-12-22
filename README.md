@@ -1,4 +1,4 @@
-# upmon [![Build Status](https://travis-ci.org/alanshaw/up.svg?branch=master)](https://travis-ci.org/alanshaw/up) [![Dependency Status](https://david-dm.org/alanshaw/up.svg?style=flat)](https://david-dm.org/alanshaw/up)
+# upmon [![Build Status](https://travis-ci.org/alanshaw/upmon.svg?branch=master)](https://travis-ci.org/alanshaw/upmon) [![Dependency Status](https://david-dm.org/alanshaw/upmon.svg?style=flat)](https://david-dm.org/alanshaw/upmon)
 Super simple service health monitoring.
 
 Upmon sends a HTTP GET request to your configured URLs. It expects a HTTP 200 response. If it gets any other response code it'll send an email. If the service recovers, it'll send another email.
