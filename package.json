@@ -4,7 +4,7 @@
   "description": "Ping websites and send an email when they're not up",
   "main": "upmon.js",
   "bin": {
-    "upmon": "upmon.js"
+    "upmon": "bin/upmon.js"
   },
   "scripts": {
     "start": "node up",

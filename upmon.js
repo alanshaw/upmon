@@ -1,4 +1,14 @@
-var config = require('config')
+var config = require('rc')('upmon', {
+  ping: {
+    interval: 300000,
+    services: []
+  },
+  mail: {
+    from: "upmon@example.org",
+    to: ["sysadmin@example.org"],
+    transport: {}
+  }
+})
 var ping = require('./ping')(config.ping)
 var mail = require('./mail')(config.mail)
 

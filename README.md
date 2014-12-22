@@ -18,7 +18,7 @@ Upmon sends a HTTP GET request to your configured URLs. It expects a HTTP 200 re
   },
   "mail": {
     // Email from address
-    "from": "up@example.org",
+    "from": "upmon@example.org",
     // Email to address(es)
     "to": ["sysadmin@exmaple.org"],
     // Nodemailer transport options
