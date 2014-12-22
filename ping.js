@@ -1,4 +1,5 @@
 var http = require('http')
+var https = require('https')
 var Readable = require('stream').Readable
 var inherits = require('util').inherits
 
@@ -26,7 +27,9 @@ PingStream.prototype._pingServices = function () {
   this.opts.services.forEach(function (url) {
     console.log('Pinging', url)
 
-    http.get(url, function (res) {
+    var protocol = url.slice(0, 5) == 'https' ? https : http
+
+    protocol.get(url, function (res) {
       console.log('Pong', url, res.statusCode)
       self.push({url: url, status: res.statusCode, timestamp: new Date()})
       res.on('data', function () {})
