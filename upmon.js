@@ -14,4 +14,4 @@ var mail = require('./mail')(config.mail)
 
 ping.pipe(mail)
 
-console.log('Up pinging', config.ping.services.length, 'services, every', config.ping.interval + 'ms')
+console.log('Upmon pinging', config.ping.services.length, 'services, every', config.ping.interval + 'ms')
