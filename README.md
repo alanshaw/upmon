@@ -34,5 +34,5 @@ Upmon sends a HTTP GET request to your configured URLs. It expects a HTTP 200 re
     }
     ```
 
-3. `node upmon`
+3. `upmon`
 
