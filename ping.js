@@ -9,6 +9,7 @@ function PingStream (opts) {
   this._results = []
   this._pushOnNext = false
   this._intervalId = setInterval(this._pingServices.bind(this), opts.interval)
+  process.nextTick(this._pingServices.bind(this))
 }
 inherits(PingStream, Readable)
 
