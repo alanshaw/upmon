@@ -1,17 +1,22 @@
+var xtend = require('xtend')
 var config = require('rc')('upmon', {
   ping: {
     interval: 300000,
     services: []
-  },
-  mail: {
-    from: "upmon@example.org",
-    to: ["sysadmin@example.org"],
-    transport: {}
   }
 })
-var ping = require('./ping')(config.ping)
-var mail = require('./mail')(config.mail)
+var ping = require('./ping')
+var mail = require('./mail')
 
-ping.pipe(mail)
+module.exports = function (opts) {
+  opts = xtend(config, opts)
 
-console.log('Upmon pinging', config.ping.services.length, 'services, every', config.ping.interval + 'ms')
+  var pinger = ping(opts.ping)
+
+  if (opts.mail) {
+    var mailer = mail(opts.mail)
+    pinger.pipe(mailer)
+  }
+
+  return pinger
+}

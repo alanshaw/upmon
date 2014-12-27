@@ -16,11 +16,9 @@ MailStream.prototype.sendFailMail = function (lastPing, ping) {
     from: this.opts.from,
     to: this.opts.to,
     subject: 'FAIL ' + ping.url,
-    text: 'FAIL ' + ping.url + ' (' + ping.status + ') at ' + ping.timestamp +
-          '\nLast success at: ' + lastPing.timestamp
+    text: 'FAIL ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp) +
+          '\nLast success at: ' + new Date(lastPing.timestamp)
   }
-
-  console.log('Sending fail mail', ping.url, ping.status, ping.timestamp)
 
   this._transport.sendMail(opts, function (er, info) {
     if (er) console.error('Failed to send fail mail', opts, er, info)
@@ -32,11 +30,9 @@ MailStream.prototype.sendRecoverMail = function (lastPing, ping) {
     from: this.opts.from,
     to: this.opts.to,
     subject: 'RECOVER ' + ping.url,
-    text: 'RECOVER ' + ping.url + ' (' + ping.status + ') at ' + ping.timestamp +
-          '\nLast fail at: ' + lastPing.timestamp
+    text: 'RECOVER ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp) +
+          '\nLast fail at: ' + new Date(lastPing.timestamp)
   }
-
-  console.log('Sending recover mail', ping.url, ping.status, ping.timestamp)
 
   this._transport.sendMail(opts, function (er, info) {
     if (er) console.error('Failed to send recover mail', opts, er, info)

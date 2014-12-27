@@ -2,6 +2,7 @@ var http = require('http')
 var https = require('https')
 var Readable = require('stream').Readable
 var inherits = require('util').inherits
+var xtend = require('xtend')
 
 function PingStream (opts) {
   Readable.call(this, {objectMode: true})
@@ -26,18 +27,16 @@ PingStream.prototype._pingServices = function () {
   }
 
   this.opts.services.forEach(function (url) {
-    console.log('Ping', url)
-
     var protocol = url.slice(0, 5) == 'https' ? https : http
+    var pingStart = Date.now()
+    var pingData = {url: url, timestamp: pingStart}
 
     protocol.get(url, function (res) {
-      console.log('Pong', url, res.statusCode)
-      self.push({url: url, status: res.statusCode, timestamp: new Date()})
+      self.push(xtend(pingData, {status: res.statusCode, rtt: Date.now() - pingStart}))
       res.resume()
       pingDone()
     }).on('error', function (e) {
-      console.log('Pong', url, 500)
-      self.push({url: url, status: 500, timestamp: new Date()})
+      self.push(xtend(pingData, {status: 500, rtt: Date.now() - pingStart}))
       pingDone()
     })
   })
