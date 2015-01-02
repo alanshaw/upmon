@@ -6,17 +6,7 @@ var config = require('rc')('upmon', {
   }
 })
 var ping = require('./ping')
-var mail = require('./mail')
 
 module.exports = function (opts) {
-  opts = xtend(config, opts)
-
-  var pinger = ping(opts.ping)
-
-  if (opts.mail) {
-    var mailer = mail(opts.mail)
-    pinger.pipe(mailer)
-  }
-
-  return pinger
+  return ping(xtend(config.ping, opts))
 }

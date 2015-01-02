@@ -1,11 +1,9 @@
 var http = require('http')
 var test = require('tape')
-var stubTransport = require('nodemailer-stub-transport')
 var ping = require('./ping')
-var mail = require('./mail')
 
 test('Fail and recover', function (t) {
-  t.plan(2)
+  t.plan(3)
 
   var reqCount = 0
 
@@ -15,32 +13,59 @@ test('Fail and recover', function (t) {
     res.end()
   }).listen(1337)
 
-  var transport = stubTransport()
   var pinger = ping({
-    "interval": 1000,
-    "services": ["http://localhost:1337"]
-  })
-  var mailer = mail({
-    "from": "up@example.org",
-    "to": ["alan@example.org"],
-    "transport": transport
+    interval: 1000,
+    services: ['http://localhost:1337']
   })
 
-  pinger.pipe(mailer)
+  pinger.on('data', function (ping) {
+    if (reqCount == 1) {
+      t.equal(ping.status, 200, 'Ping status 200')
+    } else if (reqCount == 2) {
+      t.equal(ping.status, 500, 'Ping status 500')
+    } else if (reqCount == 3) {
+      t.equal(ping.status, 200, 'Ping status 200')
 
-  var mailCount = 0
-
-  transport.on('end', function (info) {
-    var msg = info.response.toString()
-
-    if (!mailCount) {
-      t.ok(msg.indexOf('Subject: FAIL http://localhost:1337') > -1, 'Fail mail sent')
-    } else {
-      t.ok(msg.indexOf('Subject: RECOVER http://localhost:1337') > -1, 'Recover mail sent')
-      pinger.destroy()
-      server.close(t.end)
+      process.nextTick(function () {
+        pinger.destroy()
+        server.close(t.end)
+      })
     }
+  })
+})
 
-    mailCount++
+test('DNS error', function (t) {
+  t.plan(1)
+
+  var pinger = ping({
+    interval: 1000,
+    services: ['http://junk' + Date.now() + '.com']
+  })
+
+  pinger.on('data', function (ping) {
+    t.equal(ping.status, 500, 'Ping status 500')
+
+    process.nextTick(function () {
+      pinger.destroy()
+      t.end()
+    })
+  })
+})
+
+test('Invalid URL error', function (t) {
+  t.plan(1)
+
+  var pinger = ping({
+    interval: 1000,
+    services: ['notavalidurl']
+  })
+
+  pinger.on('data', function (ping) {
+    t.equal(ping.status, 500, 'Ping status 500')
+
+    process.nextTick(function () {
+      pinger.destroy()
+      t.end()
+    })
   })
 })
