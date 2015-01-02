@@ -3,6 +3,7 @@ var https = require('https')
 var Readable = require('stream').Readable
 var inherits = require('util').inherits
 var xtend = require('xtend')
+var EOL = require('os').EOL
 
 function PingStream (opts) {
   Readable.call(this, {objectMode: true})
@@ -44,7 +45,11 @@ PingStream.prototype._pingServices = function () {
 
 PingStream.prototype._pushResults = function () {
   var results = this._results
-  while (results.length && this.push(results.shift())) {}
+  while (results.length && this.push(this._ndjson(results.shift()))) {}
+}
+
+PingStream.prototype._ndjson = function (obj) {
+  return JSON.stringify(obj) + EOL
 }
 
 PingStream.prototype._read = function () {

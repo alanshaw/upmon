@@ -5,9 +5,8 @@ var config = require('rc')('upmon', {
     services: []
   }
 })
-var ndjson = require('ndjson')
 var ping = require('./ping')
 
 module.exports = function (opts) {
-  return ping(xtend(config.ping, opts)).pipe(ndjson.serialize())
+  return ping(xtend(config.ping, opts))
 }
