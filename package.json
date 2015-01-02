@@ -1,6 +1,6 @@
 {
   "name": "upmon",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Ping websites and send an email when they're not up",
   "main": "index.js",
   "bin": {
