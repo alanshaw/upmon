@@ -43,6 +43,7 @@ Need a txt message sent to your phone when a service goes down?
 
 1. `npm install -g upmon-sms`
 2. Add SMS config to your `$HOME/.upmonrc` file:
+
     ```js
     {
       "sms": {
@@ -56,6 +57,7 @@ Need a txt message sent to your phone when a service goes down?
       }
     }
     ```
+
 3. `upmon | upmon-mail | upmon-sms`
 
 ## Build your own monitor
