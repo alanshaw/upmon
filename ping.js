@@ -6,7 +6,7 @@ var xtend = require('xtend')
 var EOL = require('os').EOL
 
 function PingStream (opts) {
-  Readable.call(this, {objectMode: true})
+  Readable.call(this)
   this.opts = opts || {}
   this._results = []
   this._pushOnNext = false
@@ -22,8 +22,7 @@ PingStream.prototype._pingServices = function () {
   function pingDone () {
     remaining--
     if (remaining == 0 && self._pushOnNext) {
-      self._pushResults()
-      self._pushOnNext = false
+      self._pushResult()
     }
   }
 
@@ -33,19 +32,21 @@ PingStream.prototype._pingServices = function () {
     var pingData = {url: url, timestamp: pingStart}
 
     protocol.get(url, function (res) {
-      self.push(xtend(pingData, {status: res.statusCode, rtt: Date.now() - pingStart}))
+      pingData = xtend(pingData, {status: res.statusCode, rtt: Date.now() - pingStart})
+      self._results.push(pingData)
       res.resume()
       pingDone()
     }).on('error', function (e) {
-      self.push(xtend(pingData, {status: 500, rtt: Date.now() - pingStart}))
+      pingData = xtend(pingData, {status: 500, rtt: Date.now() - pingStart})
+      self._results.push(pingData)
       pingDone()
     })
   })
 }
 
-PingStream.prototype._pushResults = function () {
+PingStream.prototype._pushResult = function () {
   var results = this._results
-  while (results.length && this.push(this._ndjson(results.shift()))) {}
+  return this.push(this._ndjson(results.shift()))
 }
 
 PingStream.prototype._ndjson = function (obj) {
@@ -53,10 +54,8 @@ PingStream.prototype._ndjson = function (obj) {
 }
 
 PingStream.prototype._read = function () {
-  if (!this._results.length) {
-    return this._pushOnNext = true
-  }
-  this._pushResults()
+  if (!this._results.length) return this._pushOnNext = true
+  this._pushOnNext = this._pushResult()
 }
 
 PingStream.prototype.destroy = function () {

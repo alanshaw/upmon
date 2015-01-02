@@ -18,7 +18,9 @@ test('Fail and recover', function (t) {
     services: ['http://localhost:1337']
   })
 
-  pinger.on('data', function (ping) {
+  pinger.on('data', function (data) {
+    var ping = JSON.parse(data)
+
     if (reqCount == 1) {
       t.equal(ping.status, 200, 'Ping status 200')
     } else if (reqCount == 2) {
@@ -42,7 +44,9 @@ test('DNS error', function (t) {
     services: ['http://junk' + Date.now() + '.com']
   })
 
-  pinger.on('data', function (ping) {
+  pinger.on('data', function (data) {
+    var ping = JSON.parse(data)
+
     t.equal(ping.status, 500, 'Ping status 500')
 
     process.nextTick(function () {
@@ -60,7 +64,9 @@ test('Invalid URL error', function (t) {
     services: ['notavalidurl']
   })
 
-  pinger.on('data', function (ping) {
+  pinger.on('data', function (data) {
+    var ping = JSON.parse(data)
+
     t.equal(ping.status, 500, 'Ping status 500')
 
     process.nextTick(function () {
