@@ -60,6 +60,26 @@ Need a txt message sent to your phone when a service goes down?
 
 3. `upmon | upmon-mail | upmon-sms`
 
+## Graph
+
+Want to see a pretty graph of your services and their status/round trip time?
+
+<img src="https://raw.githubusercontent.com/alanshaw/upmon-graf/master/screenshot.png" width="636">
+
+1. `npm install -g upmon-graf`
+2. Add graf config to your `$HOME/.upmonrc` file:
+
+    ```js
+    {
+      "graf": {
+        // Port to run graf server on
+        "port": 5000
+      }
+    }
+    ```
+
+3. `upmon | upmon-mail | upmon-sms | upmon-graf`
+
 ## Build your own monitor
 
 Want to run upmon from [boss](https://www.npmjs.com/package/process-boss) or [pm2](https://www.npmjs.com/package/pm2)?
