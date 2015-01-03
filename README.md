@@ -1,4 +1,4 @@
-# upmon [![Build Status](https://travis-ci.org/alanshaw/upmon.svg?branch=master)](https://travis-ci.org/alanshaw/upmon) [![Dependency Status](https://david-dm.org/alanshaw/upmon.svg?style=flat)](https://david-dm.org/alanshaw/upmon) [![Coverage Status](https://img.shields.io/coveralls/alanshaw/upmon/master.svg?style=flat)](https://coveralls.io/r/alanshaw/upmon)
+# upmon [![Build Status](https://travis-ci.org/alanshaw/upmon.svg?branch=master)](https://travis-ci.org/alanshaw/upmon) [![Dependency Status](https://david-dm.org/alanshaw/upmon.svg?style=flat)](https://david-dm.org/alanshaw/upmon) [![Coverage Status](https://img.shields.io/coveralls/alanshaw/upmon/master.svg?style=flat)](https://coveralls.io/r/alanshaw/upmon) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-1dce73.svg?style=flat)](https://gitter.im/alanshaw/upmon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Super simple service health monitoring.
 
@@ -98,5 +98,4 @@ upmon().pipe(mail()).pipe(sms()).pipe(process.stdout)
 ```sh
 pm2 start monitor.js
 ```
-
 
