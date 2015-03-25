@@ -22,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "minimist": "^1.1.0",
-    "rc": "^0.5.4",
+    "rc": "^1.0.0",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
