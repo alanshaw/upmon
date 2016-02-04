@@ -80,6 +80,15 @@ Want to see a pretty graph of your services and their status/round trip time?
 
 3. `upmon | upmon-mail | upmon-sms | upmon-graf`
 
+## Tray
+
+Run upmon in your system tray.
+
+<img src="https://raw.githubusercontent.com/alanshaw/upmon-tray/master/screenshot.jpg" width="432">
+<img src="https://raw.githubusercontent.com/alanshaw/upmon-tray/master/screenshot-error.jpg" width="432">
+
+[Download for OSX and Linux](https://github.com/alanshaw/upmon-tray#upmon-tray)
+
 ## Build your own monitor
 
 Want to run upmon from [guvnor](https://www.npmjs.com/package/guvnor) or [pm2](https://www.npmjs.com/package/pm2)?
